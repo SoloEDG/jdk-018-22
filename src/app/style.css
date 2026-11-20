@@ -358,10 +358,87 @@ select,
   margin-top: 8px;
   min-height: 33px;
   padding: 9px;
-  text-align: center;
-  letter-spacing: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 2px;
   overflow: hidden;
-  white-space: nowrap;
+}
+.glyph-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1ch;
+  height: 15px;
+  line-height: 15px;
+  white-space: pre;
+  overflow: hidden;
+}
+.glyph-cell.replaced {
+  color: #e5c98b;
+  border-bottom: 1px dotted #8a7a4d;
+}
+.segmented {
+  display: flex;
+  margin-top: 9px;
+  border: 1px solid #363a41;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.segmented button {
+  flex: 1;
+  padding: 8px 6px;
+  font-size: 10px;
+  background: #1b1d22;
+  color: #8f958f;
+  border-radius: 0;
+}
+.segmented button + button {
+  border-left: 1px solid #363a41;
+}
+.segmented button.active {
+  background: #30352b;
+  color: #d5e99f;
+}
+.replacement-list {
+  margin-top: 10px;
+  border: 1px solid #3d3a2a;
+  background: #211f17;
+  border-radius: 5px;
+  padding: 9px 10px;
+  font-size: 10px;
+  color: #c5bfa5;
+}
+.env-warning {
+  color: #e0b68d;
+  border-left: 2px solid #8a5d3d;
+  padding-left: 8px;
+  margin-top: 8px;
+}
+.replacement-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #e0c68d;
+  margin-bottom: 6px;
+}
+.replacement-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 3px;
+  max-height: 108px;
+  overflow: auto;
+}
+.replacement-list code {
+  font-family: "DM Mono", monospace;
+  background: #2c2920;
+  border-radius: 3px;
+  padding: 0 3px;
+}
+.replacement-list .muted {
+  float: right;
 }
 .toggle-row {
   display: flex;
@@ -481,6 +558,20 @@ input[type="checkbox"]:checked:after {
   letter-spacing: 0;
   background: #101216;
   line-height: 16px;
+  tab-size: 1;
+}
+.stage-notice {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 32px;
+  margin: 0;
+  padding: 7px 10px;
+  border-radius: 5px;
+  border: 1px solid #5a452f;
+  background: #221c15e6;
+  color: #e0c69b;
+  font-size: 10px;
 }
 .stage-corner {
   position: absolute;
@@ -508,6 +599,9 @@ input[type="checkbox"]:checked:after {
   border-radius: 50%;
   background: #bad581;
   margin-right: 7px;
+}
+.status-dot.warn {
+  background: #e0b68d;
 }
 .zoom {
   display: flex;

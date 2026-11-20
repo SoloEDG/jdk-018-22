@@ -1,4 +1,5 @@
 import type { StudioDocument } from "./document";
+
 export function createDocument(): StudioDocument {
   return {
     asset: null,
@@ -12,6 +13,9 @@ export function createDocument(): StudioDocument {
       invert: false,
       color: true,
       background: "#101216",
+      environment: "terminal",
+      widthMode: "safe",
+      fontFamily: "monospace",
     },
     grid: null,
     revision: 0,

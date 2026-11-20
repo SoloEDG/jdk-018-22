@@ -2,12 +2,11 @@
 import { computed } from "vue";
 import { Code2, Scan, Minus, Plus } from "lucide-vue-next";
 import { usePreview } from "../model/usePreview";
-import { gridRows } from "../lib/rows";
+import { gridText } from "../../../shared/grid";
 import ArtCanvas from "./ArtCanvas.vue";
+
 const p = usePreview();
-const text = computed(() =>
-  p.doc.grid ? gridRows(p.doc.grid).join("\n") : "",
-);
+const text = computed(() => (p.doc.grid ? gridText(p.doc.grid) : ""));
 </script>
 <template>
   <main class="workspace">
@@ -46,26 +45,33 @@ const text = computed(() =>
           v-else-if="p.doc.grid"
           data-testid="text-preview"
           :style="{
+            fontFamily: p.doc.grid.fontFamily,
             fontSize: (14 * p.zoom.value) / 100 + 'px',
             lineHeight: (16 * p.zoom.value) / 100 + 'px',
           }"
           >{{ text }}</pre>
         <span v-else>正在准备字符画…</span>
       </div>
+      <p
+        v-if="p.layoutError.value && p.doc.grid"
+        class="stage-notice"
+        role="status"
+        data-testid="layout-error"
+      >
+        {{ p.layoutError.value }}
+      </p>
       <div class="stage-corner">
-        {{ p.doc.grid?.columns }} COL × {{ p.doc.grid?.rows }} ROW
+        {{ p.doc.grid?.columns }} COL × {{ p.doc.grid?.rows }} ROW ·
+        {{ p.doc.grid?.widthMode === "preserve" ? "原始字符" : "单列安全" }}
+        <template v-if="p.doc.grid"> · {{ p.doc.grid.environmentName }}</template>
       </div>
     </div>
     <div class="preview-bottom">
       <span class="mono"
-        ><i class="status-dot" />{{
-          p.busy.value
-            ? "生成中"
-            : p.doc.grid?.revision === p.doc.revision
-              ? "已同步"
-              : "待重新生成"
+        ><i class="status-dot" :class="{ warn: p.layoutError.value }" />{{
+          p.status.value
         }}
-        <span class="muted">/ {{ p.count.value }} 个字符</span></span
+        <span class="muted">/ {{ p.count.value }} 个逻辑字符</span></span
       >
       <div class="zoom">
         <button
